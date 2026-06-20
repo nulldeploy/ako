@@ -1,0 +1,9 @@
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24.000000" height="24.000000" fill="none">
+	<rect id="svg" width="24.000000" height="24.000000" x="0.000000" y="0.000000" />
+	<g id="Сочетание 13">
+		<path id="1032" d="M12.601 21.799C12.486 21.8854 12.3538 21.9461 12.2133 21.9767C12.0727 22.0074 11.9273 22.0074 11.7867 21.9767C11.6462 21.9461 11.514 21.8854 11.399 21.799C9.539 20.193 4 14.993 4 10C4 8.31056 4.53484 6.6645 5.52786 5.29772C6.52089 3.93094 7.92112 2.91361 9.52786 2.39155C11.1346 1.86948 12.8654 1.86948 14.4721 2.39155C16.0789 2.91361 17.4791 3.93094 18.4721 5.29772C19.4652 6.6645 20 8.31057 20 10C20 14.993 14.461 20.193 12.601 21.799Z" fill-rule="nonzero" stroke="rgb(15,44,89)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.000000" />
+		<circle id="1033" cx="12" cy="10" r="3" stroke="rgb(15,44,89)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.000000" />
+		<rect id="path.[object SVGAnimatedString]" width="16.000000" height="20.000000" x="4.000000" y="2.000000" />
+		<rect id="circle.[object SVGAnimatedString]" width="6.000000" height="6.000000" x="9.000000" y="7.000000" />
+	</g>
+</svg>

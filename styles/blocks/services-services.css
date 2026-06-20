@@ -1,0 +1,57 @@
+/* ─── Services Hero ──────────────────────────────────────────────────────── */
+
+.svc-hero {
+  padding: 130px 0 64px;
+  background: var(--general-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.svc-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(255,255,255,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.svc-hero__inner { position: relative; }
+
+.svc-hero__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 20px;
+}
+
+.svc-hero__breadcrumb a {
+  color: rgba(255,255,255,0.5);
+  transition: color 0.2s ease;
+}
+
+.svc-hero__breadcrumb a:hover { color: rgba(255,255,255,0.85); }
+
+.svc-hero__breadcrumb i { font-size: 0.625rem; }
+
+.svc-hero__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--white-color);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.svc-hero__desc {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.65);
+  max-width: 560px;
+}
+
+@media (max-width: 630px) {
+  .svc-hero { padding: 100px 0 48px; }
+  .svc-hero__title { font-size: 1.75rem; }
+  .svc-hero__desc { font-size: 0.9rem; }
+}

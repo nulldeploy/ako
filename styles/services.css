@@ -1,0 +1,100 @@
+/* =IMPORT= */
+
+/* Helpers */
+@import "../styles/fonts.css";
+@import "../styles/helpers/reset.css";
+@import "../styles/helpers/swiper-bundle.min.css";
+@import "../styles/helpers/custom-select.css";
+@import "../styles/helpers/cookie-banner.css";
+@import "../styles/helpers/modal.css";
+
+/* Blocks */
+@import "../styles/blocks/header.css";
+@import "../styles/blocks/footer.css";
+
+/* Services */
+@import "../styles/blocks/services-services.css";
+@import "../styles/blocks/services-content.css";
+
+/* =MAIN STYLES= */
+
+/* Smooth scroll when links */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5vw;
+}
+
+.page__body {
+  font-family: var(--main-font-family);
+  line-height: 1;
+  color: var(--general-color);
+  background: var(--bg-color);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.wrapper {
+  min-height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.container {
+  width: min(var(--container-width), 100% - var(--container-padding) * 2);
+  margin: 0 auto;
+  height: 100%;
+}
+
+/* When burger menu opened - page not touchabale */
+.page__body--no-scroll {
+  overflow-y: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+button {
+  background: transparent;
+}
+
+:root {
+  /* font-family */
+  --main-font-family: "Inter 18pt", sans-serif;
+
+  /* colors */
+  --general-color: #0f2c59;
+  --secondary-color: #64748b;
+  --accent-color: #1e293b;
+  --bg-color: #f1f5f96a;
+  --white-color: #fff;
+  --black-color: #000;
+
+  /* transition */
+  --transition-time: 0.4s;
+
+  /* hover */
+  --hover-opacity: 0.7;
+
+  /* container */
+  --container-width: 1440px;
+  --container-padding: 15px;
+}
+
+/* =BLOCKS STYLES= */
+
+.logo {
+  transition: all var(--transition-time) ease;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}

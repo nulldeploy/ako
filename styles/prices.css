@@ -1,0 +1,240 @@
+/* =IMPORT= */
+
+@import "../styles/fonts.css";
+@import "../styles/helpers/reset.css";
+@import "../styles/helpers/swiper-bundle.min.css";
+@import "../styles/helpers/custom-select.css";
+@import "../styles/helpers/cookie-banner.css";
+@import "../styles/helpers/modal.css";
+
+@import "../styles/blocks/header.css";
+@import "../styles/blocks/footer.css";
+@import "../styles/blocks/contact-introductory.css";
+@import "../styles/blocks/services-content.css";
+
+/* =BASE= */
+
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+.page__body {
+  font-family: var(--main-font-family);
+  line-height: 1;
+  color: var(--general-color);
+  background: var(--bg-color);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.wrapper { min-height: 100%; width: 100%; overflow: hidden; display: flex; flex-direction: column; }
+.main { flex-grow: 1; }
+
+.container {
+  width: min(var(--container-width), 100% - var(--container-padding) * 2);
+  margin: 0 auto;
+  height: 100%;
+}
+
+img { max-width: 100%; height: auto; object-fit: cover; }
+button { background: transparent; }
+
+:root {
+  --main-font-family: "Inter 18pt", sans-serif;
+  --general-color: #0f2c59;
+  --secondary-color: #64748b;
+  --accent-color: #1e293b;
+  --bg-color: #f1f5f96a;
+  --white-color: #fff;
+  --black-color: #000;
+  --transition-time: 0.4s;
+  --hover-opacity: 0.7;
+  --container-width: 1440px;
+  --container-padding: 15px;
+}
+
+.logo { transition: all var(--transition-time) ease; }
+.logo:hover { transform: scale(1.1); }
+
+/* =PRICES= */
+
+.prices { padding: 56px 0 80px; }
+
+/* ─── Note ───────────────────────────────────────────────────────────────── */
+
+.prices__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(15, 44, 89, 0.05);
+  border-left: 3px solid var(--general-color);
+  border-radius: 0 10px 10px 0;
+  padding: 16px 20px;
+  margin-bottom: 40px;
+}
+
+.prices__note i {
+  color: var(--general-color);
+  font-size: 1rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.prices__note p {
+  font-size: 0.9rem;
+  color: #334155;
+  line-height: 1.6;
+}
+
+/* ─── Accordion list ─────────────────────────────────────────────────────── */
+
+.prices__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+/* ─── Price Accordion Card (.pac) ────────────────────────────────────────── */
+
+.pac {
+  background: var(--white-color);
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(15, 44, 89, 0.06);
+  border: 1px solid rgba(15, 44, 89, 0.07);
+  overflow: hidden;
+}
+
+.pac__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.pac__header:hover { background: rgba(15, 44, 89, 0.025); }
+
+.pac__header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pac__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(15, 44, 89, 0.07);
+  color: var(--general-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.pac__header:hover .pac__icon,
+.pac[data-open="true"] .pac__icon {
+  background: var(--general-color);
+  color: var(--white-color);
+}
+
+.pac__title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--general-color);
+}
+
+.pac__arrow {
+  color: var(--secondary-color);
+  font-size: 0.875rem;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              color 0.2s ease;
+}
+
+.pac__header:hover .pac__arrow { color: var(--general-color); }
+
+/* ─── Accordion body ─────────────────────────────────────────────────────── */
+
+.pac__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ─── Price table ────────────────────────────────────────────────────────── */
+
+.pac__table {
+  padding: 0 24px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pac__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(15, 44, 89, 0.06);
+  font-size: 0.9375rem;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.pac__row:last-child { border-bottom: none; }
+
+.pac__row--head {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--secondary-color);
+  padding: 8px 0 12px;
+  border-bottom: 1.5px solid rgba(15, 44, 89, 0.1);
+}
+
+.pac__row--note {
+  font-size: 0.8125rem;
+  color: var(--secondary-color);
+  font-style: italic;
+  border-bottom: none;
+  padding-top: 8px;
+}
+
+.pac__price {
+  font-weight: 700;
+  color: var(--general-color);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Bottom note ────────────────────────────────────────────────────────── */
+
+.prices__bottom {
+  font-size: 0.8125rem;
+  color: var(--secondary-color);
+  line-height: 1.6;
+  padding: 16px 20px;
+  background: rgba(15, 44, 89, 0.03);
+  border-radius: 10px;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .prices { padding: 40px 0 56px; }
+  .pac__header { padding: 16px 18px; }
+  .pac__table { padding: 0 18px 16px; }
+  .pac__title { font-size: 0.9375rem; }
+  .pac__row { font-size: 0.875rem; gap: 12px; }
+  .pac__row--head { font-size: 0.6875rem; }
+}

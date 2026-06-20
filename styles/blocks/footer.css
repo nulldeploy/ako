@@ -1,0 +1,132 @@
+.footer {
+  background: var(--general-color);
+}
+
+.footer__inner {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  padding: 48px 0 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer__copyright {
+  padding: 33px 0 24px;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: calc(16px / 0.75rem);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer__logo {
+  display: inline-flex;
+  margin-bottom: 16px;
+}
+
+.footer__logo-badge {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 6px 10px;
+  display: inline-flex;
+  align-items: center;
+  transition: background var(--transition-time) ease;
+}
+
+.footer__logo:hover .footer__logo-badge {
+  background: rgba(255, 255, 255, 1);
+}
+
+.footer__logo-img {
+  display: block;
+  height: 36px;
+  width: auto;
+}
+
+.footer__col-desc {
+  max-width: 317px;
+  width: 100%;
+  font-size: 0.875rem;
+  line-height: calc(20px / 0.875rem);
+}
+
+.footer__col-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: calc(28px / 1.125rem);
+  margin-bottom: 16px;
+  color: var(--white-color);
+}
+
+.footer__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  line-height: calc(20px / 0.875rem);
+}
+
+.footer__item i {
+  transition: all var(--transition-time) ease;
+}
+
+.footer__item:hover i {
+  transform: rotate(270deg);
+}
+
+.footer__link {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  transition: all var(--transition-time) ease;
+}
+
+.footer__link:hover {
+  color: var(--white-color);
+}
+
+.footer__link i {
+  transition: all var(--transition-time) ease;
+}
+
+.footer__link:hover i {
+  transform: rotate(360deg);
+}
+
+.footer__info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 1145px) {
+  .footer__link {
+    font-size: 0.75rem;
+  }
+
+  .footer__col-title {
+    font-size: 1rem;
+  }
+
+  .footer__col-desc {
+    font-size: 0.75rem;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 830px) {
+  .footer__inner {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer__col-desc {
+    max-width: 250px;
+  }
+}

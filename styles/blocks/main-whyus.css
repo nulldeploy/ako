@@ -1,0 +1,122 @@
+.whyus {
+  padding: 80px 0 80px;
+}
+
+.whyus__title {
+  text-align: center;
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: calc(36px / 1.875rem);
+  margin-bottom: 16px;
+}
+
+.whyus__desc {
+  text-align: center;
+  line-height: calc(24px / 1rem);
+  color: var(--secondary-color);
+  max-width: 768px;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 64px;
+}
+
+.whyus__items {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.whyus__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 35px 22px 37px;
+  transition: all var(--transition-time) ease;
+}
+
+.whyus__item:hover {
+  transform: scale(1.05);
+}
+
+.whyus__item:hover .whyus__item-icon {
+  background: var(--general-color);
+}
+
+.whyus__item-icon svg {
+  transition: all var(--transition-time) ease;
+}
+
+.whyus__item:hover .whyus__item-icon svg {
+  transform: rotate(360deg);
+}
+
+.whyus__item:hover .whyus__item-icon path {
+  stroke: var(--white-color);
+}
+
+.whyus__item:hover .whyus__item-icon circle {
+  stroke: var(--white-color);
+}
+
+.whyus__item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(241, 245, 249, 0.5);
+  margin-bottom: 24px;
+  transition: all var(--transition-time) ease;
+}
+
+.whyus__item-title {
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: calc(28px / 1.125rem);
+  margin-bottom: 14px;
+}
+
+.whyus__item-desc {
+  max-width: 248px;
+  width: 100%;
+  font-size: 0.875rem;
+  line-height: calc(22.75px / 0.875rem);
+  text-align: center;
+  color: var(--secondary-color);
+}
+
+@media (max-width: 800px) {
+  .whyus__desc {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 650px) {
+  .whyus {
+    padding: 45px 0 45px;
+  }
+
+  .whyus__desc {
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 450px) {
+  .whyus__title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 410px) {
+  .whyus__title {
+    font-size: 1.125rem;
+  }
+
+  .whyus__desc {
+    font-size: 0.875rem;
+  }
+}

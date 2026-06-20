@@ -1,0 +1,327 @@
+/* ── Contacts Section ───────────────────────────────────────────────────── */
+
+.contacts {
+  padding: 72px 0 80px;
+}
+
+.contacts__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.contacts__heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 32px;
+  color: var(--general-color);
+}
+
+/* ── Contact Cards ──────────────────────────────────────────────────────── */
+
+.contacts__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ccard {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px;
+  background: var(--white-color);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(15, 44, 89, 0.07);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.ccard:hover {
+  box-shadow: 0 6px 24px rgba(15, 44, 89, 0.13);
+  transform: translateY(-2px);
+}
+
+.ccard__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(15, 44, 89, 0.07);
+  color: var(--general-color);
+  font-size: 1.125rem;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.4s ease;
+}
+
+.ccard:hover .ccard__icon {
+  background: var(--general-color);
+  color: white;
+  transform: rotate(8deg) scale(1.05);
+}
+
+.ccard__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ccard__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--secondary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.ccard__desc {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--general-color);
+}
+
+.ccard__desc--muted {
+  color: var(--secondary-color);
+}
+
+.ccard__link {
+  color: var(--general-color);
+  transition: color 0.25s ease;
+}
+
+.ccard__link:hover {
+  color: #1a4a8a;
+}
+
+/* ── Form ───────────────────────────────────────────────────────────────── */
+
+.contacts__form-wrap {
+  background: var(--white-color);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 2px 24px rgba(15, 44, 89, 0.08);
+}
+
+.cform {
+  display: flex;
+  flex-direction: column;
+}
+
+.cform__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 28px;
+}
+
+/* Floating label field */
+.cform__field {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.cform__input {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid rgba(15, 44, 89, 0.18);
+  background: transparent;
+  padding: 18px 0 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--general-color);
+  outline: none;
+  resize: none;
+  transition: border-color 0.3s ease;
+}
+
+.cform__input:focus {
+  border-bottom-color: var(--general-color);
+}
+
+.cform__textarea {
+  min-height: 80px;
+}
+
+.cform__label {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  font-size: 1rem;
+  color: var(--secondary-color);
+  pointer-events: none;
+  transition: top 0.25s ease, font-size 0.25s ease, color 0.25s ease;
+}
+
+.cform__label--up,
+.cform__input:focus ~ .cform__label,
+.cform__input:not(:placeholder-shown) ~ .cform__label {
+  top: 0;
+  font-size: 0.72rem;
+  color: var(--general-color);
+}
+
+/* Animated underline */
+.cform__line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--general-color);
+  transition: width 0.35s ease;
+}
+
+.cform__field:focus-within .cform__line {
+  width: 100%;
+}
+
+/* Custom select overrides inside cform */
+.cform__field .cs__trigger {
+  padding: 18px 0 8px;
+  border-bottom: 1.5px solid rgba(15, 44, 89, 0.18);
+  font-size: 1rem;
+  color: var(--general-color);
+}
+
+.cform__field .cs--open .cs__trigger {
+  border-bottom-color: var(--general-color);
+}
+
+/* Submit button */
+.cform__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px 24px;
+  background: var(--general-color);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  margin-bottom: 16px;
+}
+
+.cform__submit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(-105%);
+  transition: transform 0.4s ease;
+}
+
+.cform__submit:hover::before {
+  transform: translateX(0);
+}
+
+.cform__submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15, 44, 89, 0.28);
+}
+
+.cform__privacy {
+  font-size: 0.75rem;
+  color: var(--secondary-color);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.cform__privacy-link {
+  color: var(--general-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ── Map Section ────────────────────────────────────────────────────────── */
+
+.contacts-map {
+  margin-top: 0;
+}
+
+.contacts-map__header {
+  padding: 40px 0 32px;
+  background: var(--white-color);
+  border-top: 1px solid rgba(15, 44, 89, 0.06);
+}
+
+.contacts-map__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--general-color);
+  margin-bottom: 6px;
+}
+
+.contacts-map__desc {
+  color: var(--secondary-color);
+  font-size: 0.9375rem;
+}
+
+.contacts-map__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  height: 380px;
+  background: linear-gradient(135deg, #e8eef6 0%, #d4dde8 100%);
+  border-top: 1px solid rgba(15, 44, 89, 0.08);
+}
+
+.contacts-map__icon {
+  font-size: 3rem;
+  color: var(--general-color);
+  opacity: 0.4;
+}
+
+.contacts-map__label {
+  font-size: 0.9375rem;
+  color: var(--secondary-color);
+  letter-spacing: 0.02em;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .contacts__grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .contacts__form-wrap {
+    padding: 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contacts {
+    padding: 48px 0 56px;
+  }
+
+  .cform__grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .contacts__form-wrap {
+    padding: 24px 20px;
+  }
+
+  .ccard {
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .contacts-map__placeholder {
+    height: 260px;
+  }
+}

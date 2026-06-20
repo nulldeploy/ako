@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>АКО — Цены</title>
+    <link
+      rel="shortcut icon"
+      href="./assets/img/content/landing_logo.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./styles/prices.css" />
+  </head>
+  <body class="page__body">
+    <div class="wrapper">
+      <div id="header-placeholder"></div>
+
+      <main class="main">
+        <!-- Hero -->
+        <section class="introductory">
+          <div class="container">
+            <div class="introductory__inner">
+              <p class="introductory__breadcrumb">
+                <a href="./index.html">Главная</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                Цены
+              </p>
+              <h1 class="introductory__title">Цены</h1>
+              <p class="introductory__desc">
+                Актуальные цены на оценочные услуги. Точная стоимость
+                определяется после консультации.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Prices -->
+        <section class="prices">
+          <div class="container">
+            <!-- Note -->
+            <div class="prices__note">
+              <i class="fa-solid fa-circle-info"></i>
+              <p>
+                Цены указаны ориентировочно и могут варьироваться в зависимости
+                от сложности объекта, удалённости и срочности. Для точного
+                расчёта оставьте заявку — ответим в течение 30 минут.
+              </p>
+            </div>
+
+            <!-- Categories -->
+            <div class="prices__list">
+              <!-- 1. Жилая недвижимость -->
+              <div class="pac" data-open="true">
+                <button class="pac__header" type="button">
+                  <div class="pac__header-left">
+                    <div class="pac__icon">
+                      <i class="fa-solid fa-house"></i>
+                    </div>
+                    <span class="pac__title">Оценка жилой недвижимости</span>
+                  </div>
+                  <i class="fa-solid fa-chevron-up pac__arrow"></i>
+                </button>
+                <div class="pac__body">
+                  <div class="pac__table">
+                    <div class="pac__row pac__row--head">
+                      <span>Объект оценки</span>
+                      <span>Стоимость</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Квартира (до 50 м²)</span>
+                      <span class="pac__price">3 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Квартира (50–100 м²)</span>
+                      <span class="pac__price">4 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Квартира (свыше 100 м²)</span>
+                      <span class="pac__price">5 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Комната / доля в квартире</span>
+                      <span class="pac__price">3 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Загородный дом / коттедж</span>
+                      <span class="pac__price">6 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Дача / садовый дом</span>
+                      <span class="pac__price">4 500 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Земельный участок (ИЖС, СНТ)</span>
+                      <span class="pac__price">4 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Таунхаус / апартаменты</span>
+                      <span class="pac__price">5 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Объект незавершённого строительства</span>
+                      <span class="pac__price">от 7 000 руб.</span>
+                    </div>
+                    <div class="pac__row pac__row--note">
+                      <span
+                        >Срочная оценка (в течение 24 ч) — надбавка 50%</span
+                      >
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2. Коммерческая недвижимость -->
+              <div class="pac" data-open="true">
+                <button class="pac__header" type="button">
+                  <div class="pac__header-left">
+                    <div class="pac__icon">
+                      <i class="fa-solid fa-building"></i>
+                    </div>
+                    <span class="pac__title"
+                      >Оценка коммерческой недвижимости</span
+                    >
+                  </div>
+                  <i class="fa-solid fa-chevron-up pac__arrow"></i>
+                </button>
+                <div class="pac__body">
+                  <div class="pac__table">
+                    <div class="pac__row pac__row--head">
+                      <span>Объект оценки</span>
+                      <span>Стоимость</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Офисное помещение (до 100 м²)</span>
+                      <span class="pac__price">8 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Офисное помещение (свыше 100 м²)</span>
+                      <span class="pac__price">от 12 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Торговое помещение / магазин</span>
+                      <span class="pac__price">от 10 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Складское помещение</span>
+                      <span class="pac__price">от 10 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Производственное помещение</span>
+                      <span class="pac__price">от 15 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Земельный участок (коммерческое назначение)</span>
+                      <span class="pac__price">от 10 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оценка арендной ставки</span>
+                      <span class="pac__price">от 8 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Переоценка для целей МСФО</span>
+                      <span class="pac__price">от 20 000 руб.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. Бизнес и НМА -->
+              <div class="pac" data-open="true">
+                <button class="pac__header" type="button">
+                  <div class="pac__header-left">
+                    <div class="pac__icon">
+                      <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <span class="pac__title"
+                      >Оценка бизнеса и нематериальных активов</span
+                    >
+                  </div>
+                  <i class="fa-solid fa-chevron-up pac__arrow"></i>
+                </button>
+                <div class="pac__body">
+                  <div class="pac__table">
+                    <div class="pac__row pac__row--head">
+                      <span>Вид оценки</span>
+                      <span>Стоимость</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оценка стоимости предприятия (малый бизнес)</span>
+                      <span class="pac__price">от 25 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оценка стоимости предприятия (средний бизнес)</span>
+                      <span class="pac__price">от 50 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оценка ценных бумаг (акции, векселя)</span>
+                      <span class="pac__price">от 15 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оценка доли в уставном капитале</span>
+                      <span class="pac__price">от 15 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оценка товарного знака / бренда</span>
+                      <span class="pac__price">от 30 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оценка патента / лицензии</span>
+                      <span class="pac__price">от 20 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оценка дебиторской задолженности</span>
+                      <span class="pac__price">от 15 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Переоценка основных средств</span>
+                      <span class="pac__price">от 20 000 руб.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4. Оборудование -->
+              <div class="pac" data-open="true">
+                <button class="pac__header" type="button">
+                  <div class="pac__header-left">
+                    <div class="pac__icon">
+                      <i class="fa-solid fa-gear"></i>
+                    </div>
+                    <span class="pac__title"
+                      >Оценка оборудования и техники</span
+                    >
+                  </div>
+                  <i class="fa-solid fa-chevron-up pac__arrow"></i>
+                </button>
+                <div class="pac__body">
+                  <div class="pac__table">
+                    <div class="pac__row pac__row--head">
+                      <span>Объект оценки</span>
+                      <span>Стоимость</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Единица оборудования</span>
+                      <span class="pac__price">от 5 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Производственная линия / комплекс</span>
+                      <span class="pac__price">от 15 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Офисная техника (1 единица)</span>
+                      <span class="pac__price">от 2 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Мебель (1 позиция)</span>
+                      <span class="pac__price">от 1 500 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Серийная оценка (от 10 единиц)</span>
+                      <span class="pac__price">от 1 000 руб./ед.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оценка серверного оборудования</span>
+                      <span class="pac__price">от 8 000 руб.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 5. Транспорт -->
+              <div class="pac" data-open="true">
+                <button class="pac__header" type="button">
+                  <div class="pac__header-left">
+                    <div class="pac__icon"><i class="fa-solid fa-car"></i></div>
+                    <span class="pac__title">Оценка транспортных средств</span>
+                  </div>
+                  <i class="fa-solid fa-chevron-up pac__arrow"></i>
+                </button>
+                <div class="pac__body">
+                  <div class="pac__table">
+                    <div class="pac__row pac__row--head">
+                      <span>Объект оценки</span>
+                      <span>Стоимость</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Легковой автомобиль</span>
+                      <span class="pac__price">3 500 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Грузовой автомобиль</span>
+                      <span class="pac__price">5 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Мотоцикл / квадроцикл</span>
+                      <span class="pac__price">3 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Спецтехника / строительная техника</span>
+                      <span class="pac__price">от 7 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оценка ущерба после ДТП (легковой)</span>
+                      <span class="pac__price">5 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span
+                        >Оценка ущерба после ДТП (грузовой / спецтехника)</span
+                      >
+                      <span class="pac__price">от 8 000 руб.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 6. Судебная экспертиза -->
+              <div class="pac" data-open="true">
+                <button class="pac__header" type="button">
+                  <div class="pac__header-left">
+                    <div class="pac__icon">
+                      <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <span class="pac__title"
+                      >Судебная экспертиза и специальные виды</span
+                    >
+                  </div>
+                  <i class="fa-solid fa-chevron-up pac__arrow"></i>
+                </button>
+                <div class="pac__body">
+                  <div class="pac__table">
+                    <div class="pac__row pac__row--head">
+                      <span>Вид услуги</span>
+                      <span>Стоимость</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Судебная оценочная экспертиза (недвижимость)</span>
+                      <span class="pac__price">от 15 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Судебная оценочная экспертиза (бизнес)</span>
+                      <span class="pac__price">от 35 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Судебная экспертиза по ТС / оборудованию</span>
+                      <span class="pac__price">от 10 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оспаривание кадастровой стоимости</span>
+                      <span class="pac__price">от 15 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оценка ущерба от залива</span>
+                      <span class="pac__price">7 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Оценка ущерба от пожара</span>
+                      <span class="pac__price">от 10 000 руб.</span>
+                    </div>
+                    <div class="pac__row">
+                      <span>Рецензия на отчёт об оценке</span>
+                      <span class="pac__price">от 10 000 руб.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /prices__list -->
+
+            <!-- Bottom note -->
+            <div class="prices__bottom">
+              <p>
+                * Цены указаны без НДС. Выезд оценщика за пределы МКАД —
+                дополнительно от 500 руб./поездка. Скидки при повторных
+                обращениях и комплексных заказах.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="svc-cta">
+          <div class="container">
+            <div class="svc-cta__inner">
+              <div class="svc-cta__text">
+                <h2 class="svc-cta__title">Нужен точный расчёт стоимости?</h2>
+                <p class="svc-cta__desc">
+                  Оставьте заявку — специалист свяжется с вами и рассчитает
+                  стоимость под ваш объект.
+                </p>
+              </div>
+              <div class="svc-cta__actions">
+                <button class="svc-cta__btn-primary header__bid">
+                  Оставить заявку
+                </button>
+                <a href="./services.html" class="svc-cta__btn-secondary"
+                  >Все услуги <i class="fa-solid fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div id="footer-placeholder"></div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="./js/swiper-bundle.min.js"></script>
+    <script src="./js/components.js"></script>
+    <script>
+      // Accordion
+      document.querySelectorAll(".pac").forEach(function (pac) {
+        var btn = pac.querySelector(".pac__header");
+        var body = pac.querySelector(".pac__body");
+        var arrow = pac.querySelector(".pac__arrow");
+
+        function setOpen(open) {
+          pac.dataset.open = open;
+          body.style.maxHeight = open ? body.scrollHeight + "px" : "0";
+          arrow.style.transform = open ? "" : "rotate(180deg)";
+        }
+
+        // Init
+        setOpen(pac.dataset.open === "true");
+
+        btn.addEventListener("click", function () {
+          setOpen(pac.dataset.open !== "true");
+        });
+      });
+    </script>
+  </body>
+</html>
