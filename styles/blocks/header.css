@@ -1,9 +1,18 @@
+/* Keeps the fixed header from shifting when the scrollbar appears mid-load */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Smooth only after load (class set in components.js): opening a page via a #link jumps straight to the target */
+html.is-loaded {
+  scroll-behavior: smooth;
+}
+
 .header {
   position: fixed;
   width: 100%;
   background: var(--white-color);
   z-index: 10;
-  backdrop-filter: blur(24px);
 }
 
 .header__inner {
@@ -13,8 +22,11 @@
   padding: 20px 0 15px;
 }
 
+/* Fixed size: until the image decodes its width is 0, and the centered menu shifts */
 .header__logo {
-  max-width: 100px;
+  display: block;
+  flex-shrink: 0;
+  width: 100px;
   height: 40px;
 }
 
@@ -35,10 +47,25 @@
 }
 
 .header__link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: nowrap;
   color: var(--secondary-color);
   font-weight: 500;
   line-height: calc(20px / 1rem);
   transition: color var(--transition-time) ease;
+}
+
+/* Invisible bold copy reserves the active width, so the menu doesn't shift between pages */
+.header__link::after {
+  content: attr(data-text);
+  font-weight: 600;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
 }
 
 .header__link:hover {
@@ -67,6 +94,15 @@
 
 .header__phone:hover {
   opacity: var(--hover-opacity);
+}
+
+.header__phone-icon {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M8.07 9.66a.58.58 0 0 0 .71-.18l.21-.27a1.17 1.17 0 0 1 .93-.47h1.75a1.17 1.17 0 0 1 1.17 1.17v1.75a1.17 1.17 0 0 1-1.17 1.17A10.5 10.5 0 0 1 1.17 2.33 1.17 1.17 0 0 1 2.33 1.17h1.75A1.17 1.17 0 0 1 5.25 2.33v1.75a1.17 1.17 0 0 1-.47.93l-.27.2a.58.58 0 0 0-.17.72 8.17 8.17 0 0 0 3.73 3.73Z' stroke='%23000' stroke-width='1.17' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M8.07 9.66a.58.58 0 0 0 .71-.18l.21-.27a1.17 1.17 0 0 1 .93-.47h1.75a1.17 1.17 0 0 1 1.17 1.17v1.75a1.17 1.17 0 0 1-1.17 1.17A10.5 10.5 0 0 1 1.17 2.33 1.17 1.17 0 0 1 2.33 1.17h1.75A1.17 1.17 0 0 1 5.25 2.33v1.75a1.17 1.17 0 0 1-.47.93l-.27.2a.58.58 0 0 0-.17.72 8.17 8.17 0 0 0 3.73 3.73Z' stroke='%23000' stroke-width='1.17' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 .header__phone-content {
@@ -106,12 +142,12 @@
 
 .header__bid:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(15, 44, 89, 0.28);
+  box-shadow: 0 6px 20px rgba(var(--general-rgb), 0.28);
 }
 
 .header__bid:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(15, 44, 89, 0.2);
+  box-shadow: 0 2px 8px rgba(var(--general-rgb), 0.2);
 }
 
 .burger-icon {
@@ -181,18 +217,44 @@
   width: 100%;
 }
 
-@media (max-width: 768px) {
-  .burger-icon {
-    display: flex;
-  }
-
-  .header__right {
+/* Six menu items + phone + button don't fit on laptops: drop the phone first (it stays in the
+   burger menu and footer), then tighten, then switch to the burger while the button still fits */
+@media (max-width: 1240px) {
+  .header__right .header__info {
     display: none;
   }
 }
 
-@media (max-width: 570px) {
+@media (max-width: 1100px) {
+  .header__list {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .header__list {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 940px) {
+  .burger-icon {
+    display: flex;
+  }
+
   .header__nav {
+    display: none;
+  }
+
+  /* With the menu folded, keep the button on the right, next to the burger */
+  .header__right {
+    margin-left: auto;
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header__right {
     display: none;
   }
 }

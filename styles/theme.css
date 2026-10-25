@@ -1,0 +1,10 @@
+/* Site colours. Pick one palette:
+     themes/soft.css    — soft steel blue matched to the logo (current)
+     themes/classic.css — the original deep navy */
+@import "themes/soft.css";
+
+/* Inline SVG icons on the homepage carry the original navy as an attribute.
+   A plain attribute selector (lowest specificity) repaints them with the palette,
+   while hover rules like ".card:hover .icon path" still win. */
+[stroke="rgb(15,44,89)"] { stroke: var(--general-color); }
+[fill="rgb(15,44,89)"] { fill: var(--general-color); }

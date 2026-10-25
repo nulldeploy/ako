@@ -66,7 +66,7 @@
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: rgba(241, 245, 249, 0.5);
+  background: rgba(var(--surface-rgb), 0.5);
   margin-bottom: 24px;
   transition: all var(--transition-time) ease;
 }

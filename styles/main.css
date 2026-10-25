@@ -1,6 +1,7 @@
 /* =IMPORT= */
 
 /* Helpers */
+@import "../styles/theme.css";
 @import "../styles/fonts.css";
 @import "../styles/helpers/reset.css";
 @import "../styles/helpers/swiper-bundle.min.css";
@@ -15,16 +16,17 @@
 /* Main */
 @import "../styles/blocks/main-hero.css";
 @import "../styles/blocks/main-services.css";
+@import "../styles/blocks/split.css";
 @import "../styles/blocks/main-whyus.css";
+@import "../styles/blocks/main-audience.css";
 @import "../styles/blocks/main-trust.css";
+@import "../styles/blocks/main-letters.css";
 @import "../styles/blocks/main-consultation.css";
 
 /* =MAIN STYLES= */
 
-/* Smooth scroll when links */
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 5vw;
+  scroll-padding-top: 100px;
 }
 
 .page__body {
@@ -73,13 +75,6 @@ button {
   /* font-family */
   --main-font-family: "Inter 18pt", sans-serif;
 
-  /* colors */
-  --general-color: #0f2c59;
-  --secondary-color: #64748b;
-  --accent-color: #1e293b;
-  --bg-color: #f1f5f96a;
-  --white-color: #fff;
-  --black-color: #000;
 
   /* transition */
   --transition-time: 0.4s;

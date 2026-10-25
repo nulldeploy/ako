@@ -1,0 +1,27 @@
+/* Soft palette matched to the logo: every colour sits on the logo's hue (~201°, steel blue).
+   Logo pixels: #c1d8e2 (light), #a1c0d0 (mid), #90a3ac (outline).
+   Text colours keep at least 4.5:1 contrast on white (main colour 6.8:1). */
+
+:root {
+  --general-color: #396074;      /* buttons, headings, dark sections */
+  --general-rgb: 57, 96, 116;    /* same colour for rgba(var(--general-rgb), alpha) */
+  --general-dark: #2c4b5e;       /* toast background */
+  --accent-color: #20323c;       /* darkest text */
+  --accent-rgb: 32, 50, 60;
+  --text-color: #344651;         /* body text */
+  --secondary-color: #5c707a;    /* muted text */
+  --border-color: #dfe8ec;
+  --surface-color: #f2f6f8;      /* light panels and icon circles */
+  --surface-rgb: 242, 246, 248;
+  --plate-color: #f5f8f9;        /* logo plates in "Нам доверяют" */
+  --bg-color: #f2f6f86a;         /* page background */
+  --overlay-rgb: 24, 40, 50;     /* modal / lightbox backdrop */
+  --link-hover-color: #2c4b5e;
+  --map-placeholder-from: #e9f0f3;
+  --map-placeholder-to: #d5e2e8;
+  --brand-light: #c1d8e2;        /* light blues straight from the logo */
+  --brand-mid: #a1c0d0;
+  --brand-mid-rgb: 161, 192, 208;
+  --white-color: #fff;
+  --black-color: #000;
+}

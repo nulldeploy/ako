@@ -1,0 +1,325 @@
+.letters {
+  --swiper-theme-color: var(--general-color);
+  padding: 80px 0 0;
+}
+
+.letters__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.letters__title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: var(--general-color);
+}
+
+.letters__desc {
+  line-height: 1.5;
+  color: var(--secondary-color);
+}
+
+/* ─── Arrows ──────────────────────────────────────────────────────────────── */
+
+.letters__nav {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.letters__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(var(--general-rgb), 0.2);
+  border-radius: 50%;
+  background: var(--white-color);
+  color: var(--general-color);
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: background var(--transition-time) ease, color var(--transition-time) ease,
+              border-color var(--transition-time) ease, opacity var(--transition-time) ease;
+}
+
+.letters__arrow:hover:not(:disabled) {
+  background: var(--general-color);
+  border-color: var(--general-color);
+  color: var(--white-color);
+}
+
+.letters__arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* Swiper adds *-lock classes while all slides fit — nothing to scroll then */
+.letters__arrow.swiper-button-lock,
+.letters__pagination.swiper-pagination-lock {
+  display: none;
+}
+
+/* ─── Slider ──────────────────────────────────────────────────────────────── */
+
+.letters__slide {
+  width: 640px;
+  height: auto;
+}
+
+.letter {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 24px;
+  height: 100%;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--white-color);
+}
+
+.letter__paper {
+  position: relative;
+  display: block;
+  align-self: start;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--white-color);
+  box-shadow: 0 6px 18px rgba(var(--general-rgb), 0.08);
+  cursor: zoom-in;
+}
+
+.letter__paper img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform var(--transition-time) ease;
+}
+
+.letter__zoom {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--general-rgb), 0.45);
+  color: var(--white-color);
+  font-size: 1.5rem;
+  opacity: 0;
+  transition: opacity var(--transition-time) ease;
+}
+
+.letter__paper:hover .letter__zoom,
+.letter__paper:focus-visible .letter__zoom {
+  opacity: 1;
+}
+
+.letter__paper:hover img {
+  transform: scale(1.03);
+}
+
+.letter__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.letter__kind {
+  margin-bottom: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+}
+
+.letter__org {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--general-color);
+}
+
+.letter__quote {
+  margin: 16px 0 20px;
+  padding-left: 14px;
+  border-left: 3px solid var(--general-color);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--accent-color);
+}
+
+.letter__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.letter__date {
+  font-size: 0.875rem;
+  color: var(--secondary-color);
+}
+
+.letter__open {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--general-color);
+  cursor: pointer;
+}
+
+.letter__open i {
+  font-size: 0.8125rem;
+  transition: transform 0.3s ease;
+}
+
+.letter__open:hover i {
+  transform: translateX(4px);
+}
+
+.letters__pagination {
+  display: none;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.letters__pagination .swiper-pagination-bullet {
+  margin: 0;
+}
+
+/* ─── Lightbox ────────────────────────────────────────────────────────────── */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  padding: 56px 20px 20px;
+  background: rgba(var(--overlay-rgb), 0.85);
+  /* Letters are tall: scroll to read instead of shrinking the text */
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox--open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox__img {
+  display: block;
+  width: min(900px, 100%);
+  height: auto;
+  margin: auto;
+  border-radius: 4px;
+  background: var(--white-color);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.lightbox__close {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--white-color);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.lightbox__close:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .letters__slide {
+    width: 560px;
+  }
+
+  .letter {
+    grid-template-columns: 170px minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .letters {
+    padding-top: 45px;
+  }
+
+  .letters__title {
+    font-size: 1.5rem;
+  }
+
+  .letters__head {
+    margin-bottom: 24px;
+  }
+
+  .letters__nav {
+    display: none;
+  }
+
+  .letters__pagination {
+    display: flex;
+  }
+
+  .letters__slide {
+    width: 100%;
+  }
+
+  /* Stacked: show the letterhead strip instead of the whole page */
+  .letter {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding: 16px;
+  }
+
+  .letter__paper {
+    height: 190px;
+  }
+
+  .letter__paper img {
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .letter__zoom {
+    opacity: 1;
+    inset: auto 10px 10px auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1rem;
+  }
+}

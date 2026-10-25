@@ -14,7 +14,7 @@
   border-radius: 7px;
   padding: 5px 13px;
   background: var(--white-color);
-  border: 1px solid rgba(241, 245, 249, 255);
+  border: 1px solid rgba(var(--surface-rgb), 255);
 
   font-size: 0.875rem;
   font-weight: 600;
@@ -33,8 +33,12 @@
   margin-bottom: 27px;
 }
 
-.hero__title span {
+.hero__title > span {
   opacity: 0.8;
+}
+
+.hero__nowrap {
+  white-space: nowrap;
 }
 
 .hero__desc {
@@ -49,6 +53,7 @@
 
 .hero__actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 55px;
 }
@@ -66,7 +71,7 @@
   color: var(--white-color);
   border-radius: 10px;
   background: var(--general-color);
-  box-shadow: 0 4px 16px rgba(15, 44, 89, 0.18);
+  box-shadow: 0 4px 16px rgba(var(--general-rgb), 0.18);
   position: relative;
   overflow: hidden;
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
@@ -88,12 +93,12 @@
 
 .consultation__button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(15, 44, 89, 0.28);
+  box-shadow: 0 8px 28px rgba(var(--general-rgb), 0.28);
 }
 
 .consultation__button:active {
   transform: translateY(0);
-  box-shadow: 0 3px 10px rgba(15, 44, 89, 0.2);
+  box-shadow: 0 3px 10px rgba(var(--general-rgb), 0.2);
 }
 
 .consultation__button svg {
@@ -120,7 +125,7 @@
   line-height: 1.5;
   color: var(--general-color);
   background: var(--white-color);
-  border: 1.5px solid rgba(15, 44, 89, 0.18);
+  border: 1.5px solid rgba(var(--general-rgb), 0.18);
   border-radius: 10px;
   transition: border-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               background 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
@@ -130,14 +135,77 @@
 
 .services__button:hover {
   border-color: var(--general-color);
-  background: rgba(15, 44, 89, 0.04);
+  background: rgba(var(--general-rgb), 0.04);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(15, 44, 89, 0.1);
+  box-shadow: 0 4px 16px rgba(var(--general-rgb), 0.1);
 }
 
 .services__button:active {
   transform: translateY(0);
   box-shadow: none;
+}
+
+/* ─── "Все услуги" reveals two links to the right ─── */
+
+.services__button {
+  gap: 10px;
+}
+
+.services__button-arrow {
+  font-size: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.services__button[aria-expanded="true"] {
+  border-color: var(--general-color);
+}
+
+.services__button[aria-expanded="true"] .services__button-arrow {
+  transform: rotate(180deg);
+}
+
+.hero__services {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero__services--open {
+  display: flex;
+}
+
+.hero__services-link {
+  display: flex;
+  align-items: center;
+  padding: 11px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--general-color);
+  background: var(--white-color);
+  border: 1.5px solid rgba(var(--general-rgb), 0.18);
+  border-radius: 10px;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  /* backwards: once finished, the hover transform is no longer overridden */
+  animation: hero-services-in 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) backwards;
+}
+
+.hero__services-link:nth-child(2) {
+  animation-delay: 0.06s;
+}
+
+.hero__services-link:hover {
+  border-color: var(--general-color);
+  background: rgba(var(--general-rgb), 0.04);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(var(--general-rgb), 0.1);
+}
+
+@keyframes hero-services-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
 }
 
 .hero__info {
@@ -153,14 +221,16 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: rgba(30, 41, 59, 0.8);
+  color: rgba(var(--accent-rgb), 0.8);
   font-size: 0.875rem;
   font-weight: 500;
   line-height: calc(20px / 0.875rem);
 }
 
+/* flex-start keeps the block as tall as the photo, so the stats card is anchored to the photo, not to the text column */
 .hero__preview {
   position: relative;
+  align-self: flex-start;
 }
 
 .hero__preview-image {
@@ -177,17 +247,19 @@
 }
 
 .hero__preview-content {
+  container-type: inline-size;
   display: flex;
   justify-content: space-between;
+  gap: 16px;
   position: absolute;
   max-width: calc(100% - 40px);
   width: 100%;
   left: 3.5%;
-  bottom: 4%;
+  bottom: -32px;
   background: var(--white-color);
   padding: 16px 16px;
   border-radius: 4px;
-  box-shadow: 0px 4px 12px -2px rgba(15, 44, 89, 0.1);
+  box-shadow: 0px 4px 12px -2px rgba(var(--general-rgb), 0.1);
 }
 
 .hero__content-text {
@@ -204,7 +276,28 @@
   font-weight: 700;
   line-height: calc(32px / 1.5rem);
   color: var(--general-color);
+  white-space: nowrap;
+}
+
+.hero__content-founded {
   text-align: right;
+}
+
+/* Sized by the card's own width: on tablets the photo is narrow even on wide screens */
+@container (max-width: 339px) {
+  .hero__content-text span {
+    font-size: 1.25rem;
+  }
+}
+
+@container (max-width: 279px) {
+  .hero__content-text {
+    font-size: 0.75rem;
+  }
+
+  .hero__content-text span {
+    font-size: 1.0625rem;
+  }
 }
 
 @media (max-width: 1100px) {
@@ -212,12 +305,18 @@
     max-width: 400px;
   }
 
+  /* Cap so "Санкт-Петербурге" fits the 400px column */
+  .hero__title {
+    font-size: min(clamp(1.5rem, 0.631rem + 3.56vw, 3.75rem), 2.625rem);
+  }
+
   .hero__desc {
     font-size: 0.875rem;
   }
 
   .consultation__button,
-  .services__button {
+  .services__button,
+  .hero__services-link {
     font-size: 12px;
   }
 }
@@ -241,6 +340,10 @@
   .consultation__button,
   .services__button {
     padding: 7px 15px;
+  }
+
+  .hero__services-link {
+    padding: 7px 14px;
   }
 
   .hero__preview-content {
@@ -293,13 +396,6 @@
     font-size: 0.625rem;
   }
 
-  .hero__content-text {
-    font-size: 0.75rem;
-  }
-
-  .hero__content-text span {
-    font-size: 1.25rem;
-  }
 
   .hero__info-item {
     gap: 4px;

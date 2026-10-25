@@ -1,0 +1,426 @@
+/* =IMPORT= */
+
+@import "../styles/theme.css";
+@import "../styles/fonts.css";
+@import "../styles/helpers/reset.css";
+@import "../styles/helpers/custom-select.css";
+@import "../styles/helpers/cookie-banner.css";
+@import "../styles/helpers/modal.css";
+
+@import "../styles/blocks/header.css";
+@import "../styles/blocks/footer.css";
+@import "../styles/blocks/contact-introductory.css";
+@import "../styles/blocks/split.css";
+@import "../styles/blocks/services-content.css";
+
+/* =BASE= */
+
+html { scroll-padding-top: 90px; }
+
+.page__body {
+  font-family: var(--main-font-family);
+  line-height: 1;
+  color: var(--general-color);
+  background: var(--bg-color);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.wrapper { min-height: 100%; width: 100%; overflow: hidden; display: flex; flex-direction: column; }
+.main { flex-grow: 1; }
+
+.container {
+  width: min(var(--container-width), 100% - var(--container-padding) * 2);
+  margin: 0 auto;
+  height: 100%;
+}
+
+img { max-width: 100%; height: auto; object-fit: cover; }
+button { background: transparent; }
+
+:root {
+  --main-font-family: "Inter 18pt", sans-serif;
+  --transition-time: 0.4s;
+  --hover-opacity: 0.7;
+  --container-width: 1440px;
+  --container-padding: 15px;
+}
+
+.logo { transition: all var(--transition-time) ease; }
+.logo:hover { transform: scale(1.1); }
+
+/* =ABOUT= */
+
+/* ─── Key facts under the hero ────────────────────────────────────────────── */
+
+.about-facts {
+  padding-top: 56px;
+}
+
+.about-facts__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--white-color);
+  overflow: hidden;
+}
+
+.about-facts__item {
+  padding: 28px 28px 26px;
+  border-left: 1px solid var(--border-color);
+}
+
+.about-facts__item:first-child {
+  border-left: none;
+}
+
+.about-facts__value {
+  margin-bottom: 8px;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--general-color);
+}
+
+.about-facts__label {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--secondary-color);
+}
+
+/* ─── Panorama with price labels ──────────────────────────────────────────── */
+/* Labels are HTML on top of the photo, so they stay sharp at any size.
+   Everything scales with the panorama's own width (cqw); below 700px of width
+   the cards leave the photo and line up under it, with numbered pins. */
+
+.about-photo {
+  padding-top: 24px;
+}
+
+.pano {
+  position: relative;
+  margin: 0;
+  container: pano / inline-size;
+}
+
+/* Same edges and corners as the facts card above */
+.pano__stage {
+  position: relative;
+  aspect-ratio: 2400 / 1140;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  counter-reset: pin;
+}
+
+.pano__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pano__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.45));
+}
+
+.pano__lines line {
+  stroke: var(--white-color);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.pano__pin {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: max(16px, 2.2cqw);
+  aspect-ratio: 1;
+  border: 2px solid var(--white-color);
+  border-radius: 50%;
+  background: rgba(var(--general-rgb), 0.25);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.25);
+  transform: translate(-50%, -50%);
+  counter-increment: pin;
+}
+
+/* Centre dot */
+.pano__pin::before {
+  content: '';
+  position: absolute;
+  inset: 32%;
+  border-radius: 50%;
+  background: var(--white-color);
+}
+
+/* Card corner sits exactly on the end of its line */
+.pano__cards {
+  position: absolute;
+  inset: 0 0 auto;
+  aspect-ratio: 2400 / 1140;
+  pointer-events: none;
+  counter-reset: card;
+}
+
+.pano__card {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25cqw;
+  padding: 0.85cqw 1.25cqw;
+  border-left: max(2px, 0.25cqw) solid var(--general-color);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 4px 16px rgba(var(--accent-rgb), 0.18);
+  white-space: nowrap;
+  pointer-events: auto;
+  counter-increment: card;
+}
+
+.pano__card--tl { transform: none; }
+.pano__card--tr { transform: translateX(-100%); }
+.pano__card--bl { transform: translateY(-100%); }
+.pano__card--br { transform: translate(-100%, -100%); }
+
+.pano__kind {
+  font-size: max(9px, 0.72cqw);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+}
+
+.pano__price {
+  font-size: max(12px, 1.55cqw);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--general-color);
+}
+
+.pano__caption {
+  margin-top: 10px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--secondary-color);
+}
+
+/* Narrow: numbered pins on the photo, the same numbers on cards below it */
+@container pano (max-width: 700px) {
+  .pano__lines {
+    display: none;
+  }
+
+  .pano__pin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    background: var(--general-color);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--white-color);
+  }
+
+  .pano__pin::before {
+    content: counter(pin);
+    position: static;
+    background: none;
+  }
+
+  .pano__cards {
+    position: static;
+    aspect-ratio: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+    pointer-events: auto;
+  }
+
+  .pano__card {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    gap: 2px;
+    padding: 10px 10px 10px 40px;
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--general-color);
+    background: var(--white-color);
+    box-shadow: none;
+  }
+
+  .pano__card::before {
+    content: counter(card);
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--general-color);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--white-color);
+    transform: translateY(-50%);
+  }
+
+  .pano__kind {
+    font-size: 0.6875rem;
+  }
+
+  .pano__price {
+    font-size: 0.9375rem;
+  }
+}
+
+@container pano (max-width: 300px) {
+  .pano__cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* The split section sits right under the panorama */
+.about-photo + .split {
+  padding-top: 56px;
+}
+
+/* ─── Bullet lists inside the two "who we help" cards ─────────────────────── */
+
+.about-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.about-list li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+.about-list li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--general-color);
+  opacity: 0.5;
+}
+
+/* ─── Partner types ───────────────────────────────────────────────────────── */
+
+.about-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 28px;
+}
+
+.about-chips li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--white-color);
+  font-size: 0.9375rem;
+  line-height: 1.3;
+  color: var(--accent-color);
+}
+
+.about-chips i {
+  font-size: 0.875rem;
+  color: var(--general-color);
+}
+
+.about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+}
+
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--general-color);
+}
+
+.about-link i {
+  font-size: 0.8125rem;
+  transition: transform 0.3s ease;
+}
+
+.about-link:hover i {
+  transform: translateX(4px);
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .about-facts__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-facts__item:nth-child(3) {
+    border-left: none;
+  }
+
+  .about-facts__item:nth-child(n + 3) {
+    border-top: 1px solid var(--border-color);
+  }
+}
+
+@media (max-width: 600px) {
+  .about-facts {
+    padding-top: 36px;
+  }
+
+  .about-photo + .split {
+    padding-top: 36px;
+  }
+
+  .about-facts__item {
+    padding: 20px 16px;
+  }
+
+  .about-facts__value {
+    font-size: 1.75rem;
+  }
+
+  .about-facts__label {
+    font-size: 0.8125rem;
+  }
+
+  .about-chips li {
+    font-size: 0.875rem;
+    padding: 8px 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-photo {
+    padding-top: 16px;
+  }
+}

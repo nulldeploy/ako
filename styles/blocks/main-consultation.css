@@ -9,9 +9,9 @@
   padding: 65px 118px 97px 120px;
   max-width: 896px;
   width: 100%;
-  border: 1px solid rgba(226, 232, 240, 255);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
-  background: rgba(241, 245, 249, 0.2);
+  background: rgba(var(--surface-rgb), 0.2);
   margin: 0 auto;
 }
 
@@ -97,7 +97,7 @@
 .consultation__input {
   width: 100%;
   border: none;
-  border-bottom: 1.5px solid rgba(15, 44, 89, 0.2);
+  border-bottom: 1.5px solid rgba(var(--general-rgb), 0.2);
   background: transparent;
   padding: 18px 0 8px;
   font-size: 1rem;
@@ -145,6 +145,18 @@
 
 .consultation__field:focus-within .consultation__line {
   width: 100%;
+}
+
+.consultation__textarea {
+  display: block;
+  min-height: 84px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+/* Optional comment: toggle + panel styles live in helpers/modal.css */
+.consultation__form .comment-toggle {
+  margin: -12px 0 28px;
 }
 
 /* Select arrow */
@@ -210,30 +222,12 @@
 
 .consultation__submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(15, 44, 89, 0.28);
+  box-shadow: 0 8px 24px rgba(var(--general-rgb), 0.28);
 }
 
 .consultation__submit:active {
   transform: translateY(0);
-  box-shadow: 0 3px 10px rgba(15, 44, 89, 0.2);
-}
-
-/* Policy text */
-.consultation__policy {
-  font-size: 0.75rem;
-  color: var(--secondary-color);
-  line-height: 1.5;
-}
-
-.consultation__policy-link {
-  color: var(--general-color);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  transition: opacity 0.2s ease;
-}
-
-.consultation__policy-link:hover {
-  opacity: 0.7;
+  box-shadow: 0 3px 10px rgba(var(--general-rgb), 0.2);
 }
 
 /* Responsive */

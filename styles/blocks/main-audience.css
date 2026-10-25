@@ -1,0 +1,84 @@
+/* Layout of the rows lives in split.css; this file only styles the client tiles */
+
+.audience {
+  padding: 40px 0 80px;
+}
+
+.audience__clients {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  align-self: center;
+}
+
+.audience__client {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--white-color);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--general-color);
+  transition: transform var(--transition-time) ease, box-shadow var(--transition-time) ease;
+}
+
+.audience__client-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  background: rgba(var(--surface-rgb), 1);
+  font-size: 1.0625rem;
+  transition: background var(--transition-time) ease, color var(--transition-time) ease;
+}
+
+.audience__client:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(var(--general-rgb), 0.08);
+}
+
+.audience__client:hover .audience__client-icon {
+  background: var(--general-color);
+  color: var(--white-color);
+}
+
+@media (max-width: 1280px) {
+  .audience__clients {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .audience {
+    padding: 20px 0 45px;
+  }
+
+  .audience__clients {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .audience__client {
+    gap: 12px;
+    padding: 16px;
+    font-size: 0.9375rem;
+  }
+
+  .audience__client-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9375rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .audience__clients {
+    grid-template-columns: 1fr;
+  }
+}

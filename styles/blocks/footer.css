@@ -1,40 +1,34 @@
 .footer {
   background: var(--general-color);
-}
-
-.footer__inner {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  padding: 48px 0 32px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.7);
 }
 
-.footer__copyright {
-  padding: 33px 0 24px;
-  text-align: center;
-  font-size: 0.75rem;
-  line-height: calc(16px / 0.75rem);
-  color: rgba(255, 255, 255, 0.5);
+.footer__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: 48px;
+  padding: 64px 0 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* ─── Brand ───────────────────────────────────────────────────────────────── */
 
 .footer__logo {
   display: inline-flex;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .footer__logo-badge {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 8px;
-  padding: 6px 10px;
   display: inline-flex;
   align-items: center;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
   transition: background var(--transition-time) ease;
 }
 
 .footer__logo:hover .footer__logo-badge {
-  background: rgba(255, 255, 255, 1);
+  background: var(--white-color);
 }
 
 .footer__logo-img {
@@ -44,89 +38,195 @@
 }
 
 .footer__col-desc {
-  max-width: 317px;
-  width: 100%;
-  font-size: 0.875rem;
-  line-height: calc(20px / 0.875rem);
+  max-width: 320px;
+  font-size: 0.9375rem;
+  line-height: 1.6;
 }
 
+/* ─── Columns ─────────────────────────────────────────────────────────────── */
+
 .footer__col-title {
-  font-size: 1.125rem;
+  margin-bottom: 20px;
+  font-size: 1rem;
   font-weight: 700;
-  line-height: calc(28px / 1.125rem);
-  margin-bottom: 16px;
+  line-height: 1.3;
   color: var(--white-color);
 }
 
 .footer__list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.footer__item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.875rem;
-  line-height: calc(20px / 0.875rem);
-}
-
-.footer__item i {
-  transition: all var(--transition-time) ease;
-}
-
-.footer__item:hover i {
-  transform: rotate(270deg);
+  gap: 12px;
 }
 
 .footer__link {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  transition: all var(--transition-time) ease;
+  display: inline-block;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
 .footer__link:hover {
   color: var(--white-color);
+  transform: translateX(3px);
 }
 
-.footer__link i {
-  transition: all var(--transition-time) ease;
-}
+/* ─── Contacts ────────────────────────────────────────────────────────────── */
 
-.footer__link:hover i {
-  transform: rotate(360deg);
-}
-
-.footer__info {
+.footer__contacts {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
-@media (max-width: 1145px) {
-  .footer__link {
-    font-size: 0.75rem;
+.footer__contact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.25s ease;
+}
+
+.footer__contact--accent {
+  font-weight: 600;
+  color: var(--white-color);
+}
+
+.footer__contact-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.8125rem;
+  color: var(--white-color);
+  transition: background 0.25s ease;
+}
+
+/* One click selects the whole value, so it can be copied without the copy button */
+.footer__contact-text {
+  user-select: all;
+  cursor: text;
+}
+
+.footer__copy {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -4px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: opacity 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.footer__copy:hover,
+.footer__copy:focus-visible {
+  color: var(--white-color);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* With a mouse the button shows up on hover; on touch screens it is always visible */
+@media (hover: hover) {
+  .footer__copy {
+    opacity: 0;
   }
 
-  .footer__col-title {
-    font-size: 1rem;
-  }
-
-  .footer__col-desc {
-    font-size: 0.75rem;
-    max-width: 200px;
+  .footer__contact:hover .footer__copy,
+  .footer__copy:focus-visible {
+    opacity: 1;
   }
 }
 
-@media (max-width: 830px) {
+/* ─── Bottom bar ──────────────────────────────────────────────────────────── */
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 24px 0;
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+.footer__policy {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.25s ease;
+}
+
+.footer__policy:hover {
+  color: var(--white-color);
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
   .footer__inner {
-    flex-direction: column;
-    gap: 20px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px 32px;
+  }
+
+  .footer__col--brand {
+    grid-column: 1 / -1;
   }
 
   .footer__col-desc {
-    max-width: 250px;
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 700px) {
+  .footer__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 48px 0 36px;
+  }
+
+  .footer__col:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 400px) {
+  .footer__inner {
+    gap: 32px 20px;
+  }
+
+  .footer__link,
+  .footer__contact,
+  .footer__col-desc {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 340px) {
+  .footer__inner {
+    grid-template-columns: 1fr;
   }
 }

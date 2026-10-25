@@ -27,8 +27,11 @@
 }
 
 .services__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 33px 33px 34px 33px;
-  border: 1px solid rgba(226, 232, 240, 255);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   background: var(--white-color);
   transition: all var(--transition-time) ease;
@@ -97,15 +100,7 @@
   }
 }
 
-.services__item:hover .services__item-icon path {
-  stroke: var(--white-color);
-}
-
-.services__item:hover .services__item-icon circle {
-  stroke: var(--white-color);
-}
-
-.services__item:nth-child(6):hover .services__item-icon rect {
+.services__item:hover .services__item-icon :is(path, circle, rect, polyline, line) {
   stroke: var(--white-color);
 }
 
@@ -116,9 +111,18 @@
   width: 56px;
   height: 56px;
   border-radius: 4px;
-  background: rgba(241, 245, 249, 0.5);
+  background: rgba(var(--surface-rgb), 0.5);
   margin-bottom: 24px;
   transition: all var(--transition-time) ease;
+}
+
+.services__item-eyebrow {
+  margin-bottom: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
 }
 
 .services__item-title {
@@ -135,7 +139,34 @@
   margin-bottom: 24px;
 }
 
+.services__item-desc:has(+ .services__item-desc) {
+  margin-bottom: 12px;
+}
+
+.services__items--wide {
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 24px;
+}
+
+.services__items--wide .services__item:hover {
+  transform: scale(1.02);
+}
+
+.services__items--wide .services__item-desc {
+  max-width: none;
+}
+
+button.services__item-link {
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
 .services__item-link {
+  margin-top: auto;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -157,14 +188,19 @@
 }
 
 @media (max-width: 1280px) {
-  .services__items {
-    grid-template-columns: repeat(2, 0.5fr);
-    justify-content: center;
-  }
-
   .services__item-desc {
     font-size: 0.875rem;
     max-width: 300px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .services__items {
+    grid-template-columns: 1fr;
+  }
+
+  .services__item-desc {
+    max-width: none;
   }
 }
 

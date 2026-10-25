@@ -1,0 +1,68 @@
+# Settings for Apache hosting (Beget and most shared hosting read this file).
+# Every block is wrapped in <IfModule>, so a missing module is skipped instead of breaking the site.
+
+AddDefaultCharset utf-8
+
+# Types some older servers don't know
+AddType application/manifest+json .webmanifest
+AddType image/webp .webp
+AddType font/woff2 .woff2
+
+# The site's own page for missing addresses
+ErrorDocument 404 /404.html
+
+# ─── Addresses ───────────────────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Turn on ONLY after the SSL certificate is issued in the hosting panel,
+  # otherwise the site stops opening. Then remove the "#" from these 6 lines:
+  # http → https
+  # RewriteCond %{HTTPS} off
+  # RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # www.site → site (one address for search engines)
+  # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  # RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+  # /index.html → / (the same page shouldn't live at two addresses)
+  RewriteCond %{THE_REQUEST} \s/index\.html[\s?] [NC]
+  RewriteRule ^index\.html$ / [L,R=301]
+</IfModule>
+
+# ─── Compression: HTML, CSS and JS travel 3–5 times smaller ──────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json application/xml image/svg+xml application/manifest+json
+</IfModule>
+
+# ─── Browser cache ───────────────────────────────────────────────────────────
+# Pictures and fonts are reused between pages. HTML, CSS and JS are checked on every
+# visit (a cheap "not modified" answer), so an update is visible at once and the page
+# never mixes new HTML with an old stylesheet.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType image/x-icon "access plus 30 days"
+  ExpiresByType image/vnd.microsoft.icon "access plus 30 days"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|css|js|webmanifest|xml|txt)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# ─── Hidden files (.git, .gitignore, .env …) are never served ────────────────
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>

@@ -1,61 +1,218 @@
 .trust {
-  padding: 64px 0 64px;
+  padding: 80px 0;
   background: var(--general-color);
-  transition: all var(--transition-time) ease;
+  color: var(--white-color);
 }
 
-.trust:hover {
-  transform: scale(1.05);
+.trust__head {
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 .trust__title {
   font-size: 1.875rem;
   font-weight: 700;
-  line-height: calc(36px / 1.875rem);
-  margin-bottom: 32px;
-  color: var(--white-color);
-  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 12px;
 }
 
-.trust__items {
+.trust__desc {
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ─── Client logos ────────────────────────────────────────────────────────── */
+
+.trust__logos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.trust__logo {
   display: flex;
+  flex-direction: column;
+  padding: 16px 16px 20px;
+  border-radius: 8px;
+  background: var(--white-color);
+  transition: transform var(--transition-time) ease, box-shadow var(--transition-time) ease;
+}
+
+.trust__logo:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+}
+
+.trust__logo-plate {
+  display: flex;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 32px;
+  height: 104px;
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 6px;
+  background: var(--plate-color);
 }
 
-.trust__item {
-  padding: 12px 55px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  color: var(--white-color);
+/* multiply blends the logos' own white backgrounds into the plate */
+.trust__logo-plate img {
+  max-width: min(100%, 230px);
+  max-height: 64px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.trust__logo-name {
+  margin-bottom: 6px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--general-color);
+}
+
+.trust__logo-kind {
+  margin-top: auto;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+}
+
+/* ─── Major projects ──────────────────────────────────────────────────────── */
+
+.trust__projects {
+  margin-top: 64px;
+}
+
+.trust__subtitle {
+  font-size: 1.5rem;
   font-weight: 700;
-  line-height: calc(24px / 1rem);
-  opacity: 0.7;
-  transition: all var(--transition-time) ease;
+  line-height: 1.25;
+  margin-bottom: 12px;
 }
 
-.trust__item:hover {
-  transform: scale(1.03) translateX(-10px);
-  opacity: 1;
+.trust__lead {
+  max-width: 720px;
+  margin-bottom: 28px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.trust__item:nth-child(even):hover {
-  transform: scale(1.03) translateX(10px);
+.trust__project-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
 }
 
-@media (max-width: 810px) {
+.trust__project {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  transition: background var(--transition-time) ease, border-color var(--transition-time) ease;
+}
+
+.trust__project:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.trust__project-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 1.0625rem;
+}
+
+.trust__project-kind {
+  margin-bottom: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.trust__project-text {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+  .trust__project-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .trust__logos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .trust {
+    padding: 48px 0;
+  }
+
   .trust__title {
-    font-size: 20px;
+    font-size: 1.5rem;
   }
 
-  .trust__item {
-    padding: 12px 20px;
+  .trust__logos {
+    gap: 12px;
   }
-}
 
-@media (max-width: 500px) {
-  .trust__items {
-    gap: 20px;
+  .trust__logo {
+    padding: 10px 10px 14px;
+  }
+
+  .trust__logo-plate {
+    height: 80px;
+    padding: 8px;
+    margin-bottom: 12px;
+  }
+
+  .trust__logo-plate img {
+    max-height: 56px;
+  }
+
+  .trust__logo-name {
+    font-size: 0.8125rem;
+  }
+
+  .trust__logo-kind {
+    font-size: 0.6875rem;
+  }
+
+  .trust__projects {
+    margin-top: 44px;
+  }
+
+  .trust__subtitle {
+    font-size: 1.25rem;
+  }
+
+  .trust__project-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .trust__project {
+    padding: 16px;
   }
 }

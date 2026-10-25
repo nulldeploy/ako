@@ -33,12 +33,12 @@
   padding: 24px;
   background: var(--white-color);
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(15, 44, 89, 0.07);
+  box-shadow: 0 2px 12px rgba(var(--general-rgb), 0.07);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .ccard:hover {
-  box-shadow: 0 6px 24px rgba(15, 44, 89, 0.13);
+  box-shadow: 0 6px 24px rgba(var(--general-rgb), 0.13);
   transform: translateY(-2px);
 }
 
@@ -50,7 +50,7 @@
   width: 48px;
   height: 48px;
   border-radius: 10px;
-  background: rgba(15, 44, 89, 0.07);
+  background: rgba(var(--general-rgb), 0.07);
   color: var(--general-color);
   font-size: 1.125rem;
   transition: background 0.3s ease, color 0.3s ease, transform 0.4s ease;
@@ -93,7 +93,7 @@
 }
 
 .ccard__link:hover {
-  color: #1a4a8a;
+  color: var(--link-hover-color);
 }
 
 /* ── Form ───────────────────────────────────────────────────────────────── */
@@ -102,7 +102,7 @@
   background: var(--white-color);
   border-radius: 16px;
   padding: 40px;
-  box-shadow: 0 2px 24px rgba(15, 44, 89, 0.08);
+  box-shadow: 0 2px 24px rgba(var(--general-rgb), 0.08);
 }
 
 .cform {
@@ -125,7 +125,7 @@
 .cform__input {
   width: 100%;
   border: none;
-  border-bottom: 1.5px solid rgba(15, 44, 89, 0.18);
+  border-bottom: 1.5px solid rgba(var(--general-rgb), 0.18);
   background: transparent;
   padding: 18px 0 8px;
   font-size: 1rem;
@@ -180,7 +180,7 @@
 /* Custom select overrides inside cform */
 .cform__field .cs__trigger {
   padding: 18px 0 8px;
-  border-bottom: 1.5px solid rgba(15, 44, 89, 0.18);
+  border-bottom: 1.5px solid rgba(var(--general-rgb), 0.18);
   font-size: 1rem;
   color: var(--general-color);
 }
@@ -226,20 +226,7 @@
 
 .cform__submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(15, 44, 89, 0.28);
-}
-
-.cform__privacy {
-  font-size: 0.75rem;
-  color: var(--secondary-color);
-  text-align: center;
-  line-height: 1.5;
-}
-
-.cform__privacy-link {
-  color: var(--general-color);
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  box-shadow: 0 8px 24px rgba(var(--general-rgb), 0.28);
 }
 
 /* ── Map Section ────────────────────────────────────────────────────────── */
@@ -251,7 +238,7 @@
 .contacts-map__header {
   padding: 40px 0 32px;
   background: var(--white-color);
-  border-top: 1px solid rgba(15, 44, 89, 0.06);
+  border-top: 1px solid rgba(var(--general-rgb), 0.06);
 }
 
 .contacts-map__title {
@@ -273,8 +260,14 @@
   justify-content: center;
   gap: 16px;
   height: 380px;
-  background: linear-gradient(135deg, #e8eef6 0%, #d4dde8 100%);
-  border-top: 1px solid rgba(15, 44, 89, 0.08);
+  background: linear-gradient(135deg, var(--map-placeholder-from) 0%, var(--map-placeholder-to) 100%);
+  border-top: 1px solid rgba(var(--general-rgb), 0.08);
+}
+
+/* Once the Yandex map is mounted the container is just a full-size canvas */
+.contacts-map__placeholder--map {
+  display: block;
+  background: var(--map-placeholder-from);
 }
 
 .contacts-map__icon {
@@ -287,6 +280,28 @@
   font-size: 0.9375rem;
   color: var(--secondary-color);
   letter-spacing: 0.02em;
+}
+
+.contacts-map__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: var(--general-color);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--white-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contacts-map__link i {
+  font-size: 0.75rem;
+}
+
+.contacts-map__link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(var(--general-rgb), 0.25);
 }
 
 /* ── Responsive ─────────────────────────────────────────────────────────── */

@@ -1,0 +1,26 @@
+/* Classic palette: the site's original deep navy (until October 2026).
+   To bring it back, switch the import in styles/theme.css to this file. */
+
+:root {
+  --general-color: #0f2c59;      /* buttons, headings, dark sections */
+  --general-rgb: 15, 44, 89;     /* same colour for rgba(var(--general-rgb), alpha) */
+  --general-dark: #1a3d6e;       /* toast background */
+  --accent-color: #1e293b;       /* darkest text */
+  --accent-rgb: 30, 41, 59;
+  --text-color: #334155;         /* body text */
+  --secondary-color: #64748b;    /* muted text */
+  --border-color: #e2e8f0;
+  --surface-color: #f1f5f9;      /* light panels and icon circles */
+  --surface-rgb: 241, 245, 249;
+  --plate-color: #f6f7f9;        /* logo plates in "Нам доверяют" */
+  --bg-color: #f1f5f96a;         /* page background */
+  --overlay-rgb: 10, 25, 50;     /* modal / lightbox backdrop */
+  --link-hover-color: #1a4a8a;
+  --map-placeholder-from: #e8eef6;
+  --map-placeholder-to: #d4dde8;
+  --brand-light: #dbe9f1;        /* light blues from the logo (404 page numbers) */
+  --brand-mid: #a9cadc;
+  --brand-mid-rgb: 169, 202, 220;
+  --white-color: #fff;
+  --black-color: #000;
+}

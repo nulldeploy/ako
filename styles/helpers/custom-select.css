@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 18px 0 8px;
-  border-bottom: 1.5px solid rgba(15, 44, 89, 0.2);
+  border-bottom: 1.5px solid rgba(var(--general-rgb), 0.2);
   cursor: pointer;
   font-family: var(--main-font-family);
   font-size: 1rem;
@@ -46,11 +46,13 @@
   left: 0;
   right: 0;
   background: var(--white-color);
-  border: 1px solid rgba(15, 44, 89, 0.12);
+  border: 1px solid rgba(var(--general-rgb), 0.12);
   border-radius: 10px;
-  box-shadow: 0 8px 32px rgba(15, 44, 89, 0.12);
+  box-shadow: 0 8px 32px rgba(var(--general-rgb), 0.12);
   z-index: 200;
-  overflow: hidden;
+  max-height: min(340px, 50vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   opacity: 0;
   transform: translateY(-6px);
   pointer-events: none;
@@ -73,11 +75,26 @@
 }
 
 .cs__option:hover {
-  background: rgba(15, 44, 89, 0.05);
+  background: rgba(var(--general-rgb), 0.05);
 }
 
 .cs__option--active {
   font-weight: 600;
-  background: rgba(15, 44, 89, 0.04);
+  background: rgba(var(--general-rgb), 0.04);
   color: var(--general-color);
+}
+
+.cs__group {
+  padding: 12px 18px 6px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+  cursor: default;
+}
+
+.cs__group:not(:first-child) {
+  margin-top: 4px;
+  border-top: 1px solid rgba(var(--general-rgb), 0.08);
 }
