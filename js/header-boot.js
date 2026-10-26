@@ -6,7 +6,7 @@ function setActiveLink() {
   document.querySelectorAll('.header__link[data-nav]').forEach(function (link) {
     var nav = link.dataset.nav;
     var active =
-      (nav === 'home' && (path === '/' || path === '' || path.endsWith('index.html') || path.endsWith('/index'))) ||
+      (nav === 'home' && (path === '' || path.endsWith('/') || path.endsWith('index.html') || path.endsWith('/index'))) ||
       (nav === 'appraisal' && /\/appraisal(-[\w-]+)?(\.html)?$/.test(path)) ||
       (nav === 'expertise' && /\/expertise(-[\w-]+)?(\.html)?$/.test(path)) ||
       (nav === 'prices' && /\/prices(\.html)?$/.test(path)) ||
