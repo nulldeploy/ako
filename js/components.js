@@ -636,14 +636,19 @@ function scrollToHash(hash) {
 // ─── Page switching without a reload ─────────────────────────────────────────
 // A full page load blanks the screen in Firefox for a frame or more. Internal links instead
 // fetch the next page and swap only <main>, the page stylesheet and the head tags; the
-// header, footer, request window and cookie banner stay. Where the browser can, the swap
-// crossfades (same-document view transition, Firefox included). Any problem falls back
-// to an ordinary navigation, so links always work.
+// header, footer, request window and cookie banner stay. Where it works well the swap
+// crossfades (same-document view transition); Firefox swaps in one frame (CROSSFADE_SWAP).
+// Any problem falls back to an ordinary navigation, so links always work.
 
 const PAGE_SCRIPTS_KEEP = /(^|\/)(components|header-boot)\.js$|aos(\.min)?\.js$/;
 const PAGE_LIBRARIES = /swiper-bundle(\.min)?\.js$/;
 const HEAD_TAGS = 'title, meta[name="description"], meta[name="robots"], meta[name="theme-color"], ' +
   'link[rel="canonical"], meta[property^="og:"], meta[name^="twitter:"], script[type="application/ld+json"]';
+
+// Firefox's view transitions (new there) sometimes paint the new page for a frame or two,
+// then the old one again before the fade starts: a visible twitch (seen on video in Firefox 158).
+// There the content swaps in a single frame instead; other browsers keep the crossfade.
+const CROSSFADE_SWAP = typeof document.startViewTransition === 'function' && !/\bFirefox\//.test(navigator.userAgent);
 
 const pageCache = new Map(); // url → Promise<html>
 let navToken = 0;
@@ -755,7 +760,7 @@ async function navigate(url, { push = true, scrollY = 0 } = {}) {
       document.querySelectorAll('link[rel="stylesheet"]').forEach(l => { if (!sheets.wanted.has(l.href)) l.remove(); });
       swapPage(doc, url, scrollY);
     };
-    if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (CROSSFADE_SWAP && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
       // The transition waits for the next rendered frame. If the browser holds frames back
       // (tab in background, throttling), don't keep the old page: swap without the fade.
       const transition = document.startViewTransition(swap);
