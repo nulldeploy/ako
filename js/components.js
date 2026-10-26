@@ -590,11 +590,222 @@ function initCookieBanner() {
 // ─── Boot ────────────────────────────────────────────────────────────────────
 // Loaded with `defer`, so the DOM is already parsed when this runs.
 
-(async function boot() {
-  if (location.hash) {
-    document.getElementById(decodeURIComponent(location.hash.slice(1)))
-      ?.scrollIntoView({ block: 'start', behavior: 'instant' });
+// Firefox may run deferred scripts before every @import-ed stylesheet is in. Measuring the
+// page then (getBoundingClientRect, AOS, Swiper) makes it lay out and paint half-styled
+// content: the flash between pages. Anything that measures waits for "load".
+function whenPageLoaded() {
+  return document.readyState === 'complete'
+    ? Promise.resolve()
+    : new Promise(resolve => window.addEventListener('load', resolve, { once: true }));
+}
+
+// Everything inside <main> that needs JS. Runs on first load and after every page swap;
+// each init skips elements it has already wired.
+function initPage() {
+  setActiveLink();
+  document.querySelectorAll('select[data-service-select]:not([data-cs-init])').forEach(fillServiceSelect);
+  initCustomSelects();
+  initPhoneMasks();
+  initButtons();
+  initLeadForms();
+  initCommentToggles();
+}
+
+// Blocks already on screen show at once (no blink on every page switch); only those
+// below the fold fade in on scroll. Until aos-armed nothing is hidden: helpers/page-transitions.css
+function armAnimations() {
+  if (!window.AOS) return;
+  document.querySelectorAll('[data-aos]').forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight) el.removeAttribute('data-aos');
+  });
+  if (document.documentElement.classList.contains('aos-armed')) {
+    AOS.refreshHard();
+  } else {
+    document.documentElement.classList.add('aos-armed');
+    AOS.init({ once: true, offset: 80, duration: 500, easing: 'ease-out' });
   }
+}
+
+function scrollToHash(hash) {
+  if (!hash) return false;
+  const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+  target?.scrollIntoView({ block: 'start', behavior: 'instant' });
+  return !!target;
+}
+
+// ─── Page switching without a reload ─────────────────────────────────────────
+// A full page load blanks the screen in Firefox for a frame or more. Internal links instead
+// fetch the next page and swap only <main>, the page stylesheet and the head tags; the
+// header, footer, request window and cookie banner stay. Where the browser can, the swap
+// crossfades (same-document view transition, Firefox included). Any problem falls back
+// to an ordinary navigation, so links always work.
+
+const PAGE_SCRIPTS_KEEP = /(^|\/)(components|header-boot)\.js$|aos(\.min)?\.js$/;
+const PAGE_LIBRARIES = /swiper-bundle(\.min)?\.js$/;
+const HEAD_TAGS = 'title, meta[name="description"], meta[name="robots"], meta[name="theme-color"], ' +
+  'link[rel="canonical"], meta[property^="og:"], meta[name^="twitter:"], script[type="application/ld+json"]';
+
+const pageCache = new Map(); // url → Promise<html>
+let navToken = 0;
+let shownPath = location.pathname;
+
+function fetchPage(url) {
+  if (!pageCache.has(url)) {
+    const request = fetch(url, { credentials: 'same-origin' }).then(res => {
+      if (!res.ok || !(res.headers.get('content-type') || '').includes('text/html')) throw new Error('HTTP ' + res.status);
+      return res.text();
+    });
+    request.catch(() => pageCache.delete(url));
+    pageCache.set(url, request);
+  }
+  return pageCache.get(url);
+}
+
+// A left click on an internal page link; everything else is left to the browser
+function swappableUrl(link, event) {
+  if (!link || (event && (event.defaultPrevented || event.button !== 0 ||
+      event.metaKey || event.ctrlKey || event.shiftKey || event.altKey))) return null;
+  const href = link.getAttribute('href');
+  if (!href || href.startsWith('#') || link.hasAttribute('download') ||
+      (link.target && link.target !== '_self') || link.closest('[data-reload]')) return null;
+  const url = new URL(link.href, location.href);
+  if (url.origin !== location.origin || !/(\.html|\/)$/.test(url.pathname)) return null;
+  if (url.pathname === location.pathname && url.search === location.search && url.hash) return null; // same-page anchor
+  return url;
+}
+
+// New page stylesheets load switched off (media="print") so they can't restyle the
+// current page early; swapPage() turns them on and drops the old ones.
+function preloadStylesheets(doc, url) {
+  const have = new Set([...document.querySelectorAll('link[rel="stylesheet"]')].map(l => l.href));
+  const wanted = [...doc.querySelectorAll('link[rel="stylesheet"]')].map(l => new URL(l.getAttribute('href'), url).href);
+  const fresh = wanted.filter(href => !have.has(href)).map(href => {
+    const link = Object.assign(document.createElement('link'), { rel: 'stylesheet', href, media: 'print' });
+    const loaded = new Promise(resolve => { link.onload = link.onerror = resolve; });
+    document.head.appendChild(link);
+    return { link, loaded };
+  });
+  return { wanted: new Set(wanted), fresh };
+}
+
+function swapPage(doc, url, scrollY) {
+  document.head.querySelectorAll(HEAD_TAGS).forEach(node => node.remove());
+  doc.head.querySelectorAll(HEAD_TAGS).forEach(node => document.head.appendChild(document.importNode(node, true)));
+
+  const main = document.adoptNode(doc.querySelector('main'));
+  document.querySelector('main').replaceWith(main);
+  shownPath = url.pathname;
+
+  document.querySelectorAll('.burger-icon.active, .header__nav.active').forEach(el => el.classList.remove('active'));
+  closeAllSelects();
+  closeModal();
+
+  if (!scrollToHash(url.hash)) window.scrollTo({ top: scrollY, behavior: 'instant' });
+  armAnimations();
+  main.setAttribute('tabindex', '-1');
+  main.focus({ preventScroll: true });
+}
+
+// Scripts of the new page: page-specific ones run again for the new content (in order),
+// libraries load once, the shared ones (this file, AOS, header) never re-run.
+function runPageScripts(doc, url) {
+  document.querySelectorAll('script[data-page-script]').forEach(s => s.remove());
+  for (const original of doc.querySelectorAll('body script')) {
+    const src = original.getAttribute('src');
+    if (src && PAGE_SCRIPTS_KEEP.test(src)) continue;
+    if (!src && /WebSocket/.test(original.textContent)) continue; // Live Server's reload hook
+    const script = document.createElement('script');
+    if (src) {
+      const abs = new URL(src, url).href;
+      if (PAGE_LIBRARIES.test(src) && [...document.scripts].some(s => s.src === abs)) continue;
+      script.src = abs;
+      script.async = false;
+    } else {
+      script.textContent = original.textContent;
+    }
+    if (!PAGE_LIBRARIES.test(src || '')) script.dataset.pageScript = '';
+    document.body.appendChild(script);
+  }
+}
+
+async function navigate(url, { push = true, scrollY = 0 } = {}) {
+  const token = ++navToken;
+  const root = document.documentElement;
+  root.classList.add('is-navigating');
+  try {
+    const html = await fetchPage(url.origin + url.pathname + url.search);
+    if (token !== navToken) return;
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    if (!doc.querySelector('main')) throw new Error('no <main>');
+
+    const sheets = preloadStylesheets(doc, url);
+    await Promise.all(sheets.fresh.map(s => s.loaded));
+    if (token !== navToken) { sheets.fresh.forEach(s => s.link.remove()); return; }
+
+    if (push) {
+      history.replaceState({ ...history.state, scrollY: window.scrollY }, '');
+      history.pushState({ scrollY: 0 }, '', url.href);
+    }
+
+    let swapped = false;
+    const swap = () => {
+      if (swapped) return;
+      swapped = true;
+      sheets.fresh.forEach(s => { s.link.media = 'all'; });
+      document.querySelectorAll('link[rel="stylesheet"]').forEach(l => { if (!sheets.wanted.has(l.href)) l.remove(); });
+      swapPage(doc, url, scrollY);
+    };
+    if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // The transition waits for the next rendered frame. If the browser holds frames back
+      // (tab in background, throttling), don't keep the old page: swap without the fade.
+      const transition = document.startViewTransition(swap);
+      transition.ready.catch(() => {}); // rejects when the fade is skipped; not an error
+      transition.finished.catch(() => {});
+      await Promise.race([transition.updateCallbackDone, new Promise(r => setTimeout(r, 600))]);
+      if (!swapped) { transition.skipTransition(); swap(); }
+    } else {
+      swap();
+    }
+
+    runPageScripts(doc, url);
+    initPage();
+  } catch (err) {
+    console.warn('Page swap failed, loading normally:', err);
+    location.assign(url.href);
+  } finally {
+    if (token === navToken) root.classList.remove('is-navigating');
+  }
+}
+
+function initPageSwitching() {
+  if (!window.fetch || !window.DOMParser || !history.pushState) return;
+  history.scrollRestoration = 'manual';
+  history.replaceState({ ...history.state, scrollY: window.scrollY }, '');
+
+  document.addEventListener('click', e => {
+    const url = swappableUrl(e.target.closest('a'), e);
+    if (!url) return;
+    e.preventDefault();
+    if (url.href === location.href) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    navigate(url);
+  });
+
+  // Start loading on hover/touch, so the page is usually ready by the click
+  const warm = e => {
+    const url = swappableUrl(e.target.closest && e.target.closest('a'));
+    if (url && url.pathname !== location.pathname) fetchPage(url.origin + url.pathname + url.search).catch(() => {});
+  };
+  document.addEventListener('pointerover', warm, { passive: true });
+  document.addEventListener('touchstart', warm, { passive: true });
+  document.addEventListener('focusin', warm);
+
+  window.addEventListener('popstate', e => {
+    if (location.pathname === shownPath) return; // only the #anchor changed: the browser scrolls
+    navigate(new URL(location.href), { push: false, scrollY: (e.state && e.state.scrollY) || 0 });
+  });
+}
+
+(async function boot() {
   setTimeout(() => document.documentElement.classList.add('is-loaded'));
 
   await Promise.all([
@@ -602,24 +813,13 @@ function initCookieBanner() {
     loadComponent('footer-placeholder', './components/footer.html'),
   ]);
 
-  setActiveLink();
   initBurger();
   setFooterYear();
-  document.querySelectorAll('select[data-service-select]').forEach(fillServiceSelect);
-  initCustomSelects();
-  initPhoneMasks();
-  initButtons();
-  initLeadForms();
-  initCommentToggles();
+  initPage();
   initCookieBanner();
+  initPageSwitching();
 
-  if (window.AOS) {
-    // Blocks already on screen show at once (no blink on every page switch); only those
-    // below the fold fade in on scroll. Until aos-armed nothing is hidden: helpers/page-transitions.css
-    document.querySelectorAll('[data-aos]').forEach(el => {
-      if (el.getBoundingClientRect().top < window.innerHeight) el.removeAttribute('data-aos');
-    });
-    document.documentElement.classList.add('aos-armed');
-    AOS.init({ once: true, offset: 80, duration: 500, easing: 'ease-out' });
-  }
+  await whenPageLoaded();
+  scrollToHash(location.hash);
+  armAnimations();
 })();

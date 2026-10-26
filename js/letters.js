@@ -4,25 +4,29 @@
   const section = document.querySelector('.letters');
   if (!section) return;
 
+  // Swiper measures the slides: wait for every stylesheet, or Firefox paints half-styled content
+  const initSlider = () => new Swiper(section.querySelector('.letters__slider'), {
+    slidesPerView: 'auto',
+    spaceBetween: 20,
+    watchOverflow: true,
+    navigation: {
+      prevEl: section.querySelector('.letters__arrow--prev'),
+      nextEl: section.querySelector('.letters__arrow--next'),
+    },
+    pagination: {
+      el: section.querySelector('.letters__pagination'),
+      clickable: true,
+    },
+    a11y: {
+      prevSlideMessage: 'Предыдущее письмо',
+      nextSlideMessage: 'Следующее письмо',
+      paginationBulletMessage: 'Письмо {{index}}',
+    },
+  });
+
   if (window.Swiper) {
-    new Swiper(section.querySelector('.letters__slider'), {
-      slidesPerView: 'auto',
-      spaceBetween: 20,
-      watchOverflow: true,
-      navigation: {
-        prevEl: section.querySelector('.letters__arrow--prev'),
-        nextEl: section.querySelector('.letters__arrow--next'),
-      },
-      pagination: {
-        el: section.querySelector('.letters__pagination'),
-        clickable: true,
-      },
-      a11y: {
-        prevSlideMessage: 'Предыдущее письмо',
-        nextSlideMessage: 'Следующее письмо',
-        paginationBulletMessage: 'Письмо {{index}}',
-      },
-    });
+    if (document.readyState === 'complete') initSlider();
+    else window.addEventListener('load', initSlider, { once: true });
   }
 
   // ─── Lightbox ──────────────────────────────────────────────────────────────

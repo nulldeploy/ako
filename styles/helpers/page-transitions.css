@@ -29,3 +29,33 @@ html:not(.aos-armed) [data-aos] {
     navigation: none;
   }
 }
+
+/* Links swap the page without a reload (components.js). A thin bar under the top edge
+   shows up only if the next page takes longer than a moment to arrive. */
+html.is-navigating {
+  cursor: progress;
+}
+
+html.is-navigating::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  width: 100%;
+  height: 3px;
+  background: var(--general-color);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: page-loading 1.5s 0.15s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes page-loading {
+  to { transform: scaleX(0.85); }
+}
+
+/* Focus moves to the new content after a swap (screen readers start there); no outline for it */
+main[tabindex="-1"]:focus {
+  outline: none;
+}
