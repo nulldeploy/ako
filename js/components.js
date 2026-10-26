@@ -614,6 +614,12 @@ function initCookieBanner() {
   initCookieBanner();
 
   if (window.AOS) {
+    // Blocks already on screen show at once (no blink on every page switch); only those
+    // below the fold fade in on scroll. Until aos-armed nothing is hidden: helpers/page-transitions.css
+    document.querySelectorAll('[data-aos]').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight) el.removeAttribute('data-aos');
+    });
+    document.documentElement.classList.add('aos-armed');
     AOS.init({ once: true, offset: 80, duration: 500, easing: 'ease-out' });
   }
 })();

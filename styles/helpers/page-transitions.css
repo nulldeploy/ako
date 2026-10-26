@@ -1,0 +1,31 @@
+/* Page-to-page smoothness, shared by every page */
+
+/* AOS hides every [data-aos] block from the first paint until its script runs, so the
+   first screen blinked on each navigation. Until components.js decides what animates
+   (html.aos-armed), everything stays visible; it then drops the animation from blocks
+   already on screen and only the ones below the fold fade in on scroll. */
+html:not(.aos-armed) [data-aos] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Cross-page crossfade (Chrome, Edge, Safari 18+; elsewhere pages switch as before).
+   The header keeps its own layer, so it stays put while the content changes. */
+@view-transition {
+  navigation: auto;
+}
+
+.header {
+  view-transition-name: site-header;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.18s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}

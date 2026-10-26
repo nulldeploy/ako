@@ -2,6 +2,7 @@
 
 /* Helpers */
 @import "../styles/theme.css";
+@import "../styles/helpers/page-transitions.css";
 @import "../styles/fonts.css";
 @import "../styles/helpers/reset.css";
 @import "../styles/helpers/custom-select.css";
