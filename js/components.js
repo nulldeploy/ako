@@ -268,7 +268,10 @@ function showToast(message, icon) {
   icon = icon || '✅';
   const toast = document.createElement('div');
   toast.className = 'toast';
-  toast.innerHTML = '<span class="toast__icon">' + icon + '</span><span>' + message + '</span>';
+  // Text only: the message can come from the server's response, never treat it as HTML
+  const iconEl = Object.assign(document.createElement('span'), { className: 'toast__icon', textContent: icon });
+  const textEl = Object.assign(document.createElement('span'), { textContent: message });
+  toast.append(iconEl, textEl);
   document.body.appendChild(toast);
   setTimeout(() => {
     toast.classList.add('toast--out');
@@ -587,6 +590,46 @@ function initCookieBanner() {
   });
 }
 
+// ─── «Наверх» ─────────────────────────────────────────────────────────────────
+// Appears after one screen of scrolling. It lives outside <main>, so page swaps keep it.
+
+function initBackToTop() {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'to-top';
+  button.title = 'Наверх';
+  button.setAttribute('aria-label', 'Наверх');
+  button.innerHTML = '<i class="fa-solid fa-arrow-up" aria-hidden="true"></i>';
+  document.body.appendChild(button);
+
+  let scheduled = false;
+  const update = () => {
+    scheduled = false;
+    button.classList.toggle('to-top--visible', window.scrollY > window.innerHeight);
+    // Stay above the cookie banner while it is on screen and reaches the button's corner
+    // (on wide screens it sits in the middle and the button keeps its place)
+    const banner = document.querySelector('.cookie-banner');
+    const own = button.getBoundingClientRect();
+    const overlaps = banner && banner.getBoundingClientRect().right > own.left - 12;
+    button.style.setProperty('--to-top-lift', overlaps ? banner.offsetHeight + 12 + 'px' : '0px');
+  };
+  const schedule = () => {
+    if (!scheduled) { scheduled = true; requestAnimationFrame(update); }
+  };
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule, { passive: true });
+  // The cookie banner leaves with an animation after "Принять"
+  document.addEventListener('click', () => setTimeout(update, 600));
+
+  button.addEventListener('click', () => {
+    const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'instant' });
+    // Keyboard users carry on from the top of the page, not from a button that is about to hide
+    document.querySelector('.header__logo')?.focus({ preventScroll: true });
+  });
+  update();
+}
+
 // ─── Boot ────────────────────────────────────────────────────────────────────
 // Loaded with `defer`, so the DOM is already parsed when this runs.
 
@@ -658,6 +701,8 @@ function fetchPage(url) {
   if (!pageCache.has(url)) {
     const request = fetch(url, { credentials: 'same-origin' }).then(res => {
       if (!res.ok || !(res.headers.get('content-type') || '').includes('text/html')) throw new Error('HTTP ' + res.status);
+      // Its scripts will run here: only ever take pages from this site, even after a redirect
+      if (new URL(res.url).origin !== location.origin) throw new Error('cross-origin response');
       return res.text();
     });
     request.catch(() => pageCache.delete(url));
@@ -693,6 +738,16 @@ function preloadStylesheets(doc, url) {
   return { wanted: new Set(wanted), fresh };
 }
 
+// Firefox runs a smooth scroll (anchor links, «Наверх») on its own and, if the page is swapped
+// mid-way, finishes it on the new page. Stop it and give it a couple of frames to take effect.
+function stopScrolling() {
+  const html = document.documentElement;
+  html.style.scrollBehavior = 'auto';
+  window.scrollTo(0, window.scrollY);
+  const frames = new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  return Promise.race([frames, new Promise(resolve => setTimeout(resolve, 100))]); // rAF sleeps in hidden tabs
+}
+
 function swapPage(doc, url, scrollY) {
   document.head.querySelectorAll(HEAD_TAGS).forEach(node => node.remove());
   doc.head.querySelectorAll(HEAD_TAGS).forEach(node => document.head.appendChild(document.importNode(node, true)));
@@ -705,7 +760,12 @@ function swapPage(doc, url, scrollY) {
   closeAllSelects();
   closeModal();
 
-  if (!scrollToHash(url.hash)) window.scrollTo({ top: scrollY, behavior: 'instant' });
+  // A smooth scroll still running (say, right after «Наверх») would carry on into the new page
+  // in Firefox; switching smooth scrolling off for this jump stops it
+  const html = document.documentElement;
+  html.style.scrollBehavior = 'auto';
+  if (!scrollToHash(url.hash)) window.scrollTo(0, scrollY);
+  requestAnimationFrame(() => { html.style.scrollBehavior = ''; });
   armAnimations();
   main.setAttribute('tabindex', '-1');
   main.focus({ preventScroll: true });
@@ -747,8 +807,12 @@ async function navigate(url, { push = true, scrollY = 0 } = {}) {
     await Promise.all(sheets.fresh.map(s => s.loaded));
     if (token !== navToken) { sheets.fresh.forEach(s => s.link.remove()); return; }
 
+    const leftAtY = window.scrollY;
+    await stopScrolling();
+    if (token !== navToken) return;
+
     if (push) {
-      history.replaceState({ ...history.state, scrollY: window.scrollY }, '');
+      history.replaceState({ ...history.state, scrollY: leftAtY }, '');
       history.pushState({ scrollY: 0 }, '', url.href);
     }
 
@@ -822,6 +886,7 @@ function initPageSwitching() {
   setFooterYear();
   initPage();
   initCookieBanner();
+  initBackToTop();
   initPageSwitching();
 
   await whenPageLoaded();

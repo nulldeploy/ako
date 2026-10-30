@@ -1,3 +1,6 @@
 
 # SMTP credentials
 api/config.php
+
+# Local Claude Code settings: machine paths, not part of the site
+.claude/
